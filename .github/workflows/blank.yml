@@ -17,7 +17,7 @@ jobs:
       - name: Create K8s Kind Cluster
         uses: helm/kind-action@v1.2.0
         with:
-          # config: "./scripts/kind-config.yaml"
+          config: "scripts/kind-config.yaml"
           version: "v0.12.0"
           kubectl_version: "v1.23.4"
 
