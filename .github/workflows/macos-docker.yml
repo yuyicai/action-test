@@ -9,10 +9,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-cluster:
-    runs-on: ubuntu-latest
+  docker:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
-
-      - name: docker
+      - name: Setup Docker
+        if: startsWith(matrix.os, 'macos' )
+        uses: docker-practice/actions-setup-docker@master
+      - name: docker version
         run: |
           docker version
