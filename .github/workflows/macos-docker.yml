@@ -18,9 +18,14 @@ jobs:
           - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Setup Docker
+      - name: Setup Docker on macOS
         if: startsWith(matrix.os, 'macos' )
         uses: docker-practice/actions-setup-docker@master
+        with:
+          docker_version: 20.10
+          docker_channel: stable
+          docker_buildx: false
+          docker_cli_experimental: disable
       - name: docker version
         run: |
           docker version
