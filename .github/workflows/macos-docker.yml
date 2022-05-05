@@ -18,6 +18,9 @@ jobs:
           - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
       - name: Setup Docker on macOS
         if: startsWith(matrix.os, 'macos' )
         uses: docker-practice/actions-setup-docker@master
@@ -26,6 +29,16 @@ jobs:
           docker_channel: stable
           docker_buildx: false
           docker_cli_experimental: disable
-      - name: docker version
+      - name: Create K8s Kind Cluster on macOS
+        if: startsWith(matrix.os, 'macos' )
         run: |
-          docker version
+          brew install kind
+          kind create cluster --config ./scripts/kind-config.yaml --wait 2m
+
+      - name: Create K8s Kind Cluster on Linux
+        if: startsWith(matrix.os, 'ubuntu' )
+        uses: helm/kind-action@deab45fc8df9de5090a604e8ec11778eea7170bd
+        with:
+          config: "./scripts/kind-config.yaml"
+          version: "v0.12.0"
+          kubectl_version: "v1.23.4"
