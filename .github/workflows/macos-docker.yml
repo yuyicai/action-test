@@ -16,3 +16,4 @@ jobs:
       - name: echo test
         run: |
           echo "test"
+          echo "test2"
