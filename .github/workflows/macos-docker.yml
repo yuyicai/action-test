@@ -17,4 +17,4 @@ jobs:
 
       - name: echo test
         run: |
-          echo "test"
+          cat ./test.txt
